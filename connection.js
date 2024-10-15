@@ -1,9 +1,9 @@
 const ldap = require('ldapjs');
 
 // LDAP server details
-const LDAP_SERVER = 'ldap://your_ldap_server'; // Change to your LDAP server address
-const BIND_DN = 'cn=your_user,dc=example,dc=com'; // Change to your bind DN
-const BIND_PASSWORD = 'your_password'; // Change to your bind password
+const LDAP_SERVER = 'ldap://10.5.1.80'; // Change to your LDAP server address
+const BIND_DN = 'cn=winai,dc=example,dc=com'; // Change to your bind DN
+const BIND_PASSWORD = '9swaddeekrub@buu'; // Change to your bind password
 
 function testLdapConnection() {
     const client = ldap.createClient({
@@ -15,7 +15,13 @@ function testLdapConnection() {
             console.error('Failed to connect to LDAP server:', err.message);
         } else {
             console.log('Connection to LDAP server successful!');
-            client.unbind();
+            client.unbind((unbindErr) => {
+                if (unbindErr) {
+                    console.error('Failed to unbind from LDAP server:', unbindErr.message);
+                } else {
+                    console.log('Unbind from LDAP server successful!');
+                }
+            });
         }
     });
 }
